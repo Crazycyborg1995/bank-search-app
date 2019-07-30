@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import Header from './components/Header/Header';
 import Layout from './components/Layout/Layout';
+import Dropdown from './components/Dropdown/Dropdown';
+import SearchInput from './components/SearchInput/SearchInput';
 import Bank from './components/Bank/Bank';
 import axios from 'axios';
 import { debounce } from 'lodash';
@@ -15,15 +17,21 @@ class App extends Component {
   };
 
   componentDidMount() {
-    axios
-      .get('https://vast-shore-74260.herokuapp.com/banks?city=CHENNAI')
-      .then(res => {
-        this.setState({
-          banks: res.data,
-          filteredBanks: res.data,
-          loading: false
+    if (localStorage.getItem('chennai')) {
+      let data = JSON.parse(localStorage.getItem('chennai'));
+      this.setState({ banks: data, filteredBanks: data, loading: false });
+    } else {
+      axios
+        .get('https://vast-shore-74260.herokuapp.com/banks?city=CHENNAI')
+        .then(res => {
+          localStorage.setItem('chennai', JSON.stringify(res.data));
+          this.setState({
+            banks: res.data,
+            filteredBanks: res.data,
+            loading: false
+          });
         });
-      });
+    }
   }
 
   dropdownHandler = e => {
@@ -42,7 +50,6 @@ class App extends Component {
   };
 
   filterData = text => {
-    console.log('fired');
     this.setState({
       filteredBanks: this.getData(this.state.banks, text)
     });
@@ -50,7 +57,6 @@ class App extends Component {
 
   getData = (data, query) => {
     let regex = new RegExp(query, 'gi');
-    console.log(query);
     let filtered = data.filter(data => {
       for (let item of Object.values(data)) {
         if (regex.test(item)) {
@@ -74,13 +80,17 @@ class App extends Component {
           <Route path="/bank/:id" exact component={Bank} />
           <Route
             path="/"
-            component={() => (
-              <Layout
-                loading={this.state.loading}
-                changed={this.dropdownHandler}
-                searching={this.searchHandler}
-                filteredBanks={this.state.filteredBanks}
-              />
+            render={() => (
+              <div>
+                <div className="row">
+                  <Dropdown changed={this.dropdownHandler} />
+                  <SearchInput searching={this.searchHandler} />
+                </div>
+                <Layout
+                  loading={this.state.loading}
+                  filteredBanks={this.state.filteredBanks}
+                />
+              </div>
             )}
           />
           <Redirect to="/" />

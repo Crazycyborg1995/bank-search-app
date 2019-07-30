@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import uuid from 'uuid';
 
 export default function Pagination(props) {
   const [beg, setBeg] = useState(0);
@@ -29,16 +30,16 @@ export default function Pagination(props) {
 
   return (
     <nav>
-      <ul class="pagination justify-content-center mt-5">
-        <li class="page-item">
-          <a class="page-link" href="#" onClick={e => decrementPages(e)}>
+      <ul className="pagination justify-content-center mt-5">
+        <li className="page-item">
+          <a className="page-link" href="#" onClick={e => decrementPages(e)}>
             <span aria-hidden="true">&laquo;</span>
-            <span class="sr-only">Previous</span>
+            <span className="sr-only">Previous</span>
           </a>
         </li>
         {showPageNums().map(pageNum => {
           return (
-            <li className="page-item">
+            <li className="page-item" key={uuid.v4()}>
               <a
                 className={
                   pageNum === props.currentPage
@@ -54,10 +55,10 @@ export default function Pagination(props) {
           );
         })}
 
-        <li class="page-item">
-          <a class="page-link" href="" onClick={e => incrementPages(e)}>
+        <li className="page-item">
+          <a className="page-link" href="" onClick={e => incrementPages(e)}>
             <span aria-hidden="true">&raquo;</span>
-            <span class="sr-only">Next</span>
+            <span className="sr-only">Next</span>
           </a>
         </li>
       </ul>

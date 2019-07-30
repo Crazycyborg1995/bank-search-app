@@ -1,37 +1,32 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import Pagination from '../Pagination/Pagination';
 import Banks from '../Banks/Banks';
 
-export default class Main extends Component {
-  state = {
-    currentPage: 1,
-    itemsPerPage: 10
-  };
+export default function Main(props) {
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
-  changePageHandler = (e, page) => {
+  let changePageHandler = (e, page) => {
     e.preventDefault();
-    this.setState({ currentPage: page });
+    setCurrentPage(page);
   };
 
-  render() {
-    let lastItemIndex = this.state.currentPage * this.state.itemsPerPage;
-    let firstItemIndex = lastItemIndex - this.state.itemsPerPage;
-    let itemsToLoad = this.props.banks.slice(firstItemIndex, lastItemIndex);
-    console.log();
-    return (
-      <div>
-        <Banks banks={itemsToLoad} />
-        {this.props.banks.length > 10 ? (
-          <Pagination
-            currentPage={this.state.currentPage}
-            totalItems={this.props.banks.length}
-            itemsPerPage={this.state.itemsPerPage}
-            changePageHandler={this.changePageHandler}
-          />
-        ) : (
-          ''
-        )}
-      </div>
-    );
-  }
+  let lastItemIndex = currentPage * itemsPerPage;
+  let firstItemIndex = lastItemIndex - itemsPerPage;
+  let itemsToLoad = props.banks.slice(firstItemIndex, lastItemIndex);
+  return (
+    <div>
+      <Banks banks={itemsToLoad} />
+      {props.banks.length > 10 ? (
+        <Pagination
+          currentPage={currentPage}
+          totalItems={props.banks.length}
+          itemsPerPage={itemsPerPage}
+          changePageHandler={changePageHandler}
+        />
+      ) : (
+        ''
+      )}
+    </div>
+  );
 }

@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react';
-import Axios from 'axios';
+import React from 'react';
 
 export default function Bank(props) {
   if (props.location.state) {
