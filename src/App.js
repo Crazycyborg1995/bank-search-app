@@ -18,8 +18,7 @@ class App extends Component {
 
   componentDidMount() {
     if (localStorage.getItem('chennai')) {
-      let data = JSON.parse(localStorage.getItem('chennai'));
-      this.setState({ banks: data, filteredBanks: data, loading: false });
+      this.fetchCachedData('chennai');
     } else {
       axios
         .get('https://vast-shore-74260.herokuapp.com/banks?city=CHENNAI')
@@ -34,19 +33,31 @@ class App extends Component {
     }
   }
 
+  fetchCachedData = city => {
+    let data = JSON.parse(localStorage.getItem(city));
+
+    this.setState({ banks: data, filteredBanks: data, loading: false });
+  };
+
   dropdownHandler = e => {
+    let city = e.target.value;
     this.setState({ loading: true });
-    axios
-      .get(
-        `https://vast-shore-74260.herokuapp.com/banks?city=${e.target.value.toUpperCase()}`
-      )
-      .then(res => {
-        this.setState({
-          banks: res.data,
-          filteredBanks: res.data,
-          loading: false
+    if (localStorage.getItem(city)) {
+      this.fetchCachedData(city);
+    } else {
+      axios
+        .get(
+          `https://vast-shore-74260.herokuapp.com/banks?city=${city.toUpperCase()}`
+        )
+        .then(res => {
+          localStorage.setItem(city, JSON.stringify(res.data));
+          this.setState({
+            banks: res.data,
+            filteredBanks: res.data,
+            loading: false
+          });
         });
-      });
+    }
   };
 
   filterData = text => {
