@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/bank-search-app/static/css/main.73b31b1d.chunk.css",
+    "main.js": "/bank-search-app/static/js/main.59ee1fd4.chunk.js",
+    "main.js.map": "/bank-search-app/static/js/main.59ee1fd4.chunk.js.map",
+    "runtime~main.js": "/bank-search-app/static/js/runtime~main.c95ac1ed.js",
+    "runtime~main.js.map": "/bank-search-app/static/js/runtime~main.c95ac1ed.js.map",
+    "static/js/2.7d3f09cc.chunk.js": "/bank-search-app/static/js/2.7d3f09cc.chunk.js",
+    "static/js/2.7d3f09cc.chunk.js.map": "/bank-search-app/static/js/2.7d3f09cc.chunk.js.map",
+    "index.html": "/bank-search-app/index.html",
+    "precache-manifest.85e91e7722450f08aca1f65cdcdaa788.js": "/bank-search-app/precache-manifest.85e91e7722450f08aca1f65cdcdaa788.js",
+    "service-worker.js": "/bank-search-app/service-worker.js",
+    "static/css/main.73b31b1d.chunk.css.map": "/bank-search-app/static/css/main.73b31b1d.chunk.css.map",
+    "static/media/heart.svg": "/bank-search-app/static/media/heart.aa7b03b3.svg",
+    "static/media/like.svg": "/bank-search-app/static/media/like.d654ce19.svg"
+  }
+}
